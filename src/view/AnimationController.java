@@ -5,7 +5,9 @@ import util.RandomCNodes;
 import sortingalgorithms.*;
 
 import javafx.animation.SequentialTransition;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class AnimationController extends BorderPane {
@@ -31,14 +34,14 @@ public class AnimationController extends BorderPane {
 
   private Button sortButton;
   private Button randomButton;
-  private Button mergeButton;
-  private Button heapButton;
   {
     sortButton = new Button("Sort");
-    randomButton = new Button("Random numbers");
-    mergeButton = new Button("select merge sort");
-    heapButton = new Button("select heap sort");
+    randomButton = new Button("Random");
+
+    choiceBox = new ChoiceBox<>();
   }
+
+  private ChoiceBox<AbstractSort> choiceBox;
 
   public AnimationController() {
     this.display = new Pane();
@@ -49,8 +52,15 @@ public class AnimationController extends BorderPane {
 
     buttonRow.getChildren().add(sortButton);
     buttonRow.getChildren().add(randomButton);
-    buttonRow.getChildren().add(mergeButton);
-    buttonRow.getChildren().add(heapButton);
+    buttonRow.getChildren().add(choiceBox);
+
+    List<AbstractSort> abstractSortList = new ArrayList<>();
+    abstractSortList.add(new BubbleSort());
+    abstractSortList.add(new SelectionSort());
+    abstractSortList.add(new InsertionSort());
+    abstractSortList.add(new MergeSort());
+    abstractSortList.add(new QuickSort());
+    abstractSortList.add(new HeapSort());
 
     RandomCNodes randomCNodes = new RandomCNodes();
     RandomCNodes.randomCNodes();
@@ -59,14 +69,10 @@ public class AnimationController extends BorderPane {
     sortButton.setOnAction(event -> {
       sortButton.setDisable(true);
       randomButton.setDisable(true);
+
+      abstractSort = choiceBox.getValue();
       SequentialTransition sq = new SequentialTransition();
 
-      //sq.getChildren().addAll(new BubbleSort().startSort(randomCNodes.getCNodes()));
-      //sq.getChildren().addAll(new SelectionSort().startSort(randomCNodes.getCNodes()));
-      //sq.getChildren().addAll(new InsertionSort().startSort(randomCNodes.getCNodes()));
-      //sq.getChildren().addAll(new MergeSort().startSort(randomCNodes.getCNodes()));
-      //sq.getChildren().addAll(new QuickSort().startSort(randomCNodes.getCNodes()));
-      //sq.getChildren().addAll(new HeapSort().startSort(randomCNodes.getCNodes()));
       sq.getChildren().addAll(abstractSort.startSort(randomCNodes.getCNodes()));
 
       sq.setOnFinished(e -> {
@@ -81,18 +87,13 @@ public class AnimationController extends BorderPane {
 
       RandomCNodes.randomCNodes();
       display.getChildren().addAll(Arrays.asList(randomCNodes.getCNodes()));
-      System.out.println("placeoholder text!!!");
+      System.out.println("randoming cnodes...");
     });
 
-    mergeButton.setOnAction(event ->{
-      abstractSort = new MergeSort(); 
-      System.out.println("turning abstract sort into merge sort");
-    });
+    choiceBox.setItems(FXCollections.observableArrayList(
+      abstractSortList
+    ));
 
-    heapButton.setOnAction(event ->{
-      abstractSort = new HeapSort(); 
-      System.out.println("turning abstract sort into heap sort");
-    });
   }
 
 }
