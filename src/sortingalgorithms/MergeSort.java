@@ -53,7 +53,7 @@ public class MergeSort extends AbstractSort {
     for (int x = p; x <= r; x++) {
       for (int y = p; y <= r; y++) {
         if (tmp[x].equals(arr[y])) {
-          pt.getChildren().add(tmp[x].moveX(50 * (y - x)));
+          pt.getChildren().add(tmp[x].moveX(DX * (y - x)));
         }
       }
     }

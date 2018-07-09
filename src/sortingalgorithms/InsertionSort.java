@@ -32,14 +32,14 @@ public class InsertionSort extends AbstractSort {
       transitions.add(colorCNode(arr, SELECT_COLOR, i));
 
       while(j >= 0 && arr[j].getValue() > key.getValue()) {
-        pt.getChildren().add(arr[j].moveX(50));
+        pt.getChildren().add(arr[j].moveX(DX));
         arr[j + 1] = arr[j];
         j--;
       }
 
       arr[j + 1] = key;
 
-      pt.getChildren().add(key.moveX(50 * (j + 1 - i)));
+      pt.getChildren().add(key.moveX(DX * (j + 1 - i)));
       transitions.add(pt);
       transitions.add(colorCNode(arr, START_COLOR, j + 1));
 

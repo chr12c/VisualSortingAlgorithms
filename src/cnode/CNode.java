@@ -20,7 +20,7 @@ public class CNode extends Rectangle {
   public TranslateTransition moveX(int x) {
     TranslateTransition t = new TranslateTransition();
     t.setNode(this);
-    t.setDuration(Duration.millis(500));
+    t.setDuration(Duration.millis(100));
     t.setByX(x);
 
     return t; 
