@@ -76,13 +76,13 @@ public class AnimationController extends BorderPane {
       sq.getChildren().addAll(abstractSort.startSort(randomCNodes.getCNodes()));
 
       sq.setOnFinished(e -> {
-        sortButton.setDisable(false);
         randomButton.setDisable(false);
       });
       sq.play();
     });
 
     randomButton.setOnAction(event -> {
+      sortButton.setDisable(false);
       display.getChildren().clear();
 
       RandomCNodes.randomCNodes();
