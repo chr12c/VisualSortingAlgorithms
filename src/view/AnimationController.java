@@ -6,8 +6,11 @@ import sortingalgorithms.*;
 
 import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -55,6 +58,13 @@ public class AnimationController extends BorderPane {
     buttonRow.getChildren().add(sortButton);
     buttonRow.getChildren().add(randomButton);
     buttonRow.getChildren().add(choiceBox);
+
+    buttonRow.setAlignment(Pos.CENTER);
+
+    for (Node b : buttonRow.getChildren()) {
+      buttonRow.setMargin(b, new Insets(5, 5, 20, 5));
+    }
+
 
     List<AbstractSort> abstractSortList = new ArrayList<>();
     abstractSortList.add(new BubbleSort());
