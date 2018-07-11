@@ -9,33 +9,29 @@ import javafx.scene.paint.Color;
 
 public class RandomCNodes {
 
-  private static CNode[] cnodes;
-
   public RandomCNodes() {
-    this.cnodes = new CNode[AnimationController.NO_OF_CNODES];
+
   }
 
-  public static CNode[] getCNodes() {
-    return cnodes;
-  }
-
-  public static void randomCNodes() {
+  public static CNode[] randomCNodes(int n) {
+    CNode[] arr = new CNode[n];
     Random r = new Random();
 
-    for (int i = 0; i < cnodes.length; i++) {
-      cnodes[i] = new CNode(1 + r.nextInt(cnodes.length));
-      cnodes[i].setX(i * (AnimationController.WINDOW_WIDTH / cnodes.length));
-      cnodes[i].setFill(Color.CRIMSON);//define START_COLOR in AnimationController?
-      setCNodeDim(cnodes[i]);
+    for (int i = 0; i < arr.length; i++) {
+      arr[i] = new CNode(1 + r.nextInt(arr.length));
+      arr[i].setX(i * (AnimationController.WINDOW_WIDTH / arr.length));
+      arr[i].setFill(Color.CRIMSON);
+      setCNodeDim(arr[i], arr.length);
     }
-
+    return arr;
+ 
   }
 
-  private static void setCNodeDim(CNode cnode) {
-    cnode.setWidth(AnimationController.WINDOW_WIDTH / cnodes.length -
+  private static void setCNodeDim(CNode cnode, int n) {
+    cnode.setWidth(AnimationController.WINDOW_WIDTH / n -
                     AnimationController.XGAP);
     cnode.setHeight(((AnimationController.WINDOW_HEIGHT - AnimationController.BUTTONROW_BOUNDARY) 
-                      / cnodes.length)*
+                      / n) *
                       cnode.getValue());
   }
 }

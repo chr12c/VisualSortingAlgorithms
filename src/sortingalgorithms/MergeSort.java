@@ -85,7 +85,7 @@ public class MergeSort extends AbstractSort {
 
     transitions.addAll(mergeSort(arr, 0, arr.length - 1));
 
-    transitions.add(colorCNode(Arrays.asList(arr), Color.ROYALBLUE));
+    transitions.add(colorCNode(Arrays.asList(arr), SORTED_COLOR));
 
     return transitions;
   }

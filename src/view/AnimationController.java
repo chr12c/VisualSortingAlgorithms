@@ -37,6 +37,8 @@ public class AnimationController extends BorderPane {
   private Button randomButton;
   private ChoiceBox<AbstractSort> choiceBox;
 
+  private CNode[] cnodes;
+
   public AnimationController() {
     this.display = new Pane();
     this.buttonRow = new HBox();
@@ -47,6 +49,8 @@ public class AnimationController extends BorderPane {
     this.sortButton = new Button("Sort");
     this.randomButton = new Button("Random");
     this.choiceBox = new ChoiceBox<>();
+
+    this.cnodes = RandomCNodes.randomCNodes(NO_OF_CNODES);
 
     buttonRow.getChildren().add(sortButton);
     buttonRow.getChildren().add(randomButton);
@@ -60,10 +64,7 @@ public class AnimationController extends BorderPane {
     abstractSortList.add(new QuickSort());
     abstractSortList.add(new HeapSort());
 
-    RandomCNodes randomCNodes = new RandomCNodes();
-    RandomCNodes.randomCNodes();
-
-    display.getChildren().addAll(Arrays.asList(randomCNodes.getCNodes()));
+    display.getChildren().addAll(Arrays.asList(cnodes));
 
     sortButton.setOnAction(event -> {
       sortButton.setDisable(true);
@@ -73,7 +74,7 @@ public class AnimationController extends BorderPane {
 
       SequentialTransition sq = new SequentialTransition();
 
-      sq.getChildren().addAll(abstractSort.startSort(randomCNodes.getCNodes()));
+      sq.getChildren().addAll(abstractSort.startSort(cnodes));
 
       sq.setOnFinished(e -> {
         randomButton.setDisable(false);
@@ -87,16 +88,15 @@ public class AnimationController extends BorderPane {
       sortButton.setDisable(false);
       display.getChildren().clear();
 
-      RandomCNodes.randomCNodes();
-      display.getChildren().addAll(Arrays.asList(randomCNodes.getCNodes()));
-      System.out.println("randoming cnodes...done");
+      cnodes = RandomCNodes.randomCNodes(NO_OF_CNODES);
+
+      display.getChildren().addAll(Arrays.asList(cnodes));
     });
 
     choiceBox.setItems(FXCollections.observableArrayList(
       abstractSortList
     ));
 
-    //choiceBox.setValue(abstractSortList.get(5));
     choiceBox.getSelectionModel().select(5);
 
     choiceBox.setConverter(new StringConverter<AbstractSort>() {
